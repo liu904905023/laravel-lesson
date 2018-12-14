@@ -13,8 +13,10 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('tasks');
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('project_id');
             $table->string('body');
             $table->timestamps();
         });

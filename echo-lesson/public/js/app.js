@@ -988,6 +988,7 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('tasks', __webpack_require__(40));
+Vue.component('task', __webpack_require__(55));
 
 var app = new Vue({
   el: '#app'
@@ -53545,6 +53546,194 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(41)
+/* script */
+var __vue_script__ = __webpack_require__(56)
+/* template */
+var __vue_template__ = __webpack_require__(57)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Task.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5df6e888", Component.options)
+  } else {
+    hotAPI.reload("data-v-5df6e888", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['project'],
+    data: function data() {
+        return {
+            tasks: [],
+            newTask: ''
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get('/api/projects/' + this.project + '/tasks').then(function (response) {
+            //axios.get('/api/projects/'+this.project+'/tasks').then(response=>{
+
+            _this.tasks = response.data;
+        });
+        window.Echo.private('tasks.' + this.project).listen('TaskCreated', function (e) {
+            _this.tasks.push(e.task.body);
+        });
+    },
+
+    methods: {
+        addTask: function addTask() {
+            axios.post('/api/projects/' + this.project + '/tasks', { 'body': this.newTask });
+            this.tasks.push(this.newTask);
+            this.newTask = '';
+        }
+    }
+
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      { staticClass: "list-group" },
+      _vm._l(_vm.tasks, function(task) {
+        return _c("li", {
+          staticClass: "list-group-item",
+          domProps: { textContent: _vm._s(task) }
+        })
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addTask($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.newTask,
+                expression: "newTask"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Add Tasks" },
+            domProps: { value: _vm.newTask },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.newTask = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Submit")]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5df6e888", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

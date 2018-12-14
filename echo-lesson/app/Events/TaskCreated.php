@@ -23,7 +23,7 @@ class TaskCreated implements ShouldBroadcast
     public function __construct(Task $task)
     {
         $this->task = $task;
-        $this->dontBroadcastToCurrentUser();
+        $this->dontBroadcastToCurrentUser();//当前操作的用户中，不进行广播事件。
     }
 
     /**
@@ -33,6 +33,6 @@ class TaskCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('tasks');
+        return new PrivateChannel('tasks.'.$this->task->project_id);
     }
 }

@@ -32,3 +32,29 @@ Route::post('/tasks', function () {
     event(new \App\Events\TaskCreated($task));
 //    var_dump($task);
 });
+
+Route::get('/projects/{project}', function (\App\Project $project) {
+
+    return view('project.show', compact('project'));
+});
+Route::get('/api/projects/{project}/tasks', function (\App\Project $project) {
+
+    return $project->tasks->pluck('body');
+});
+Route::post('/api/projects/{project}/tasks', function (\App\Project $project) {
+
+    $task =$project->tasks()->create(['body' => request('body')]);
+    event(new \App\Events\TaskCreated($task));
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/aaa/{user}',function (\App\User $user){
+    $bb =  Auth::user()->projectuser;
+    return $bb;
+});
+Route::get('/bbb/{user}',function (\App\User $user){
+    $bb = \App\User::with('projectuser')->where('id','>','1')->get();
+    return $bb;
+});
