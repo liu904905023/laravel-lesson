@@ -8,7 +8,7 @@ class Comment extends Model
 {
     /* function comment
      * 此处对应 2018_12_14_031155_create_comments_table.php中
-     * comment_type与comment_id
+     * comment_type与comment_id中的comment
      * */
     use RecordActivity;
 
