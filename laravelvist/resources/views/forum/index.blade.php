@@ -2,7 +2,7 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1>来了，老弟！</h1>
+            <h1>来了，老1弟！</h1>
 
             <a class="btn btn-lg btn-primary pull-right" href="{{url('/discussions/create')}}" role="button">发布&raquo;</a>
             </p>
@@ -20,7 +20,16 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading"><a href="/discussions/{{$discussion->id}}"> {{$discussion->title}}</a></h4>
+                            <h4 class="media-heading">
+                                <a href="/discussions/{{$discussion->id}}"> {{$discussion->title}}</a>
+                                <div class="media-conversation-meta">
+                                    <span class="media-conversation-replies">
+                                        <a href="">{{count($discussion->comments)}}</a>
+                                        回复
+                                    </span>
+                                </div>
+
+                            </h4>
                             {{$discussion->user->name}}
                         </div>
 

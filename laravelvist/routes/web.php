@@ -12,11 +12,19 @@
 */
 
 Route::get('/','PostsController@index');
-Route::get('/user/login','UsersController@login');
 Route::get('/register','UsersController@register');
 Route::get('/verify/{confirm_code}','UsersController@confirmEmail');
 Route::post('/register','UsersController@store');
+
+Route::get('/user/login','UsersController@login');
+Route::get('/user/avatar','UsersController@avatar');
+Route::post('/user/avatar','UsersController@changeAvatar');
+Route::post('/crop/api','UsersController@cropAvatar');
 Route::post('/user/login','UsersController@signin');
+
+Route::post('/post/upload','PostsController@upload');
+
+
 Route::get('/logout', 'UsersController@logout');
 Route::resource('discussions','PostsController');
 Route::resource('comment','CommentsController');

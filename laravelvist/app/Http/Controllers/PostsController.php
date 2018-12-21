@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Discussion;
 use App\Http\Requests\DiscussionCreate;
 use Illuminate\Http\Request;
+use EndaEditor;
 
 class PostsController extends Controller
 {
@@ -24,6 +25,7 @@ class PostsController extends Controller
     public function index() {
 
         $discussions = Discussion::orderBy('created_at','desc')->paginate(10);
+//        $discussions = Discussion::latest()->paginate(10);
 
         return view('forum.index',compact('discussions'));
 
@@ -32,7 +34,8 @@ class PostsController extends Controller
     public function show($id) {
 
         $discussion = Discussion::find($id);
-        $comments = $discussion->comments()->orderBy('created_at','desc')->paginate(3);
+//        $comments = $discussion->comments()->orderBy('created_at','desc')->paginate(3);
+        $comments = $discussion->comments()->latest()->paginate(3);
         return view('forum.show', compact('discussion','comments'));
 
     }
@@ -58,7 +61,7 @@ class PostsController extends Controller
     public function edit($id) {
 
         $discussion = Discussion::find($id);
-        if(Auth::user()->id!=$discussion->user_id){
+        if(\Auth::user()->id!=$discussion->user_id){
             return redirect('/');
         }
         return view('forum.edit', compact('discussion'));
@@ -74,5 +77,11 @@ class PostsController extends Controller
         ]);
 
 
+    }
+
+    public function upload() {
+        $data = EndaEditor::uploadImgFile('uploads');
+
+        return json_encode($data);
     }
 }

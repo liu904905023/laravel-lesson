@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\UserRegistered;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function register(array $array) {
+
+        $user = static::create($array);
+//        event(new UserRegistered($user)); 打开发送邮件
+        return $user;
+
+    }
     public function discussions() {
         return $this->hasMany(Discussion::class);
         

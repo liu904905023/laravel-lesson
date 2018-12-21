@@ -10,14 +10,15 @@ class CommentsController extends Controller
 {
     public function store(PostCommentRequest $request) {
 
-//        dd($request->all());
         $aaa =Comment::create(array_merge($request->all(),[
             'user_id' => \Auth::user()->id,
             'discussion_id'=> $request->get('discussion')
         ]));
-
-        return redirect()->action('PostsController@show', [
-            'id' => $request->get('discussion'),
+        return \Response::json([
+            'success'=>true
         ]);
+//        return redirect()->action('PostsController@show', [
+//            'id' => $request->get('discussion'),
+//        ]);
     }
 }
